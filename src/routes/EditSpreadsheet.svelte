@@ -427,19 +427,6 @@
 		color: #6366f1;
 	}
 
-	.responsive-table {
-		display: block;
-		width: 100%;
-		overflow-x: auto;
-		-webkit-overflow-scrolling: touch;
-	}
-
-	.table-wrapper {
-		border-radius: 10px;
-		overflow: hidden;
-		margin: 0 auto;
-		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-	}
 
 	@media (max-width: 768px) {
 		th,
