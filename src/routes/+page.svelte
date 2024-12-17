@@ -80,6 +80,9 @@
                     <a href="#" class="text-sm font-medium text-indigo-600 hover:text-indigo-500">
                       View spreadsheet →
                     </a>
+                    <!-- <a target="_blank"  href="https://docs.google.com/spreadsheets/d/{spreadsheet.id}" class="text-sm font-medium text-indigo-600 hover:text-indigo-500">
+                        View spreadsheet →
+                      </a> -->
                   </div>
                 </div>
               {/each}
