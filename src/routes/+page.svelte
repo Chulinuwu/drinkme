@@ -104,7 +104,11 @@
 									</p>
 								</div>
 								<div class="mt-auto bg-gray-50 px-6 py-4">
-									<a href="#" class="text-sm font-medium text-indigo-600 hover:text-indigo-500">
+									<a
+										href={`https://docs.google.com/spreadsheets/d/${drinkmeSpreadsheet.id}`}
+										target="_blank"
+										class="text-sm font-medium text-indigo-600 hover:text-indigo-500"
+									>
 										View spreadsheet →
 									</a>
 								</div>
