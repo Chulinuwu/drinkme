@@ -35,7 +35,7 @@ async function getAllSpreadsheets(access_token: string) {
 }
 
 export const GET = async ({ url, cookies }) => {
-  const redirectURL = 'http://localhost:5173/oauth';
+  const redirectURL = 'https://drinkme-pearl.vercel.app/oauth';
   const code = url.searchParams.get('code');
 
   if (!code) {

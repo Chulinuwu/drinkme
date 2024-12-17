@@ -4,7 +4,7 @@ import { SECRET_CLIENT_ID, SECRET_CLIENT_SECRET } from '$env/static/private';
 
 export const actions = {
   OAuth2: async ({}) => {
-    const redirectURL = 'http://localhost:5173/oauth';
+    const redirectURL = 'https://drinkme-pearl.vercel.app/oauth';
     
     // Ensure the client ID and secret are defined
     if (!SECRET_CLIENT_ID || !SECRET_CLIENT_SECRET) {
