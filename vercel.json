@@ -1,7 +1,10 @@
 {
+    "engines": {
+      "node": "18.x"
+    },
     "build": {
       "env": {
-        "NODE_VERSION": "20.x"
+        "NODE_VERSION": "18.x"
       }
     }
   }
