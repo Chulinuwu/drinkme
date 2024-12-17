@@ -276,7 +276,7 @@
 			<div class="flex items-center">
 				<button
 					on:click={logout}
-					class="max-h-8 max-w-24 rounded bg-red-500 px-4 py-2 font-bold text-white transition duration-300 ease-in-out hover:bg-red-600 max-md:text-xs"
+					class="max-h-8 max-w-24  text-xs rounded bg-red-500 px-4 py-2 font-bold text-white transition duration-300 ease-in-out hover:bg-red-600 max-md:text-xs"
 				>
 					Sign Out
 				</button>
