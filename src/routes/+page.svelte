@@ -1,47 +1,46 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
+    import { onMount } from 'svelte';
+    import { getAllSpreadsheets } from '$lib/spreadsheetService';
     import { fade } from 'svelte/transition';
-	import { getAllSpreadsheets } from '$lib/spreadsheetService';
-
-	let user: { name: string; access_token: string } | null = null;
-	let spreadsheets: any[] = [];
+  
+    let user: { name: string; access_token: string } | null = null;
+    let spreadsheets: any[] = [];
     let token: string = '';
-
-	onMount(async () => {
-		// Access cookies for user data
-		const userCookie = document.cookie.split('; ').find((row) => row.startsWith('user='));
-		if (userCookie) {
-			user = JSON.parse(decodeURIComponent(userCookie.split('=')[1]));
-		}
-        const tokenCookie = document.cookie.split('; ').find((row) => row.startsWith('token='));
-		if (tokenCookie) {
-			token = JSON.parse(decodeURIComponent(tokenCookie.split('=')[1]));
-		}
-
-        if (user && token) {
-			// Fetch spreadsheets and store in localStorage
-			spreadsheets = await getAllSpreadsheets(token);
-			localStorage.setItem('spreadsheets', JSON.stringify(spreadsheets));
-		}
-
-		console.log('User:', user);
-		console.log('token:', token);
-        console.log('Spreadsheets:', spreadsheets);
-	});
-
-	function logout() {
-		// Clear cookies and localStorage
-		document.cookie = 'user=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
-		document.cookie = 'spreadsheets=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
-		localStorage.removeItem('spreadsheets');
-		user = null;
-		spreadsheets = [];
-
-		console.log('User logged out.');
-	}
-</script>
-
-<div class="min-h-screen bg-gray-100">
+    let drinkmeSpreadsheet: any | null = null;
+  
+    onMount(async () => {
+      const userCookie = document.cookie.split('; ').find((row) => row.startsWith('user='));
+      if (userCookie) {
+        user = JSON.parse(decodeURIComponent(userCookie.split('=')[1]));
+      }
+      const tokenCookie = document.cookie.split('; ').find((row) => row.startsWith('token='));
+      if (tokenCookie) {
+        token = JSON.parse(decodeURIComponent(tokenCookie.split('=')[1]));
+      }
+  
+      if (user && token) {
+        spreadsheets = await getAllSpreadsheets(token);
+        localStorage.setItem('spreadsheets', JSON.stringify(spreadsheets));
+        drinkmeSpreadsheet = spreadsheets.find((spreadsheet) => spreadsheet.name === 'Drinkme');
+      }
+  
+      console.log('User:', user);
+      console.log('token:', token);
+      console.log('Spreadsheets:', spreadsheets);
+    });
+  
+    function logout() {
+      document.cookie = 'user=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
+      document.cookie = 'spreadsheets=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
+      localStorage.removeItem('spreadsheets');
+      user = null;
+      spreadsheets = [];
+      drinkmeSpreadsheet = null;
+      console.log('User logged out.');
+    }
+  </script>
+  
+  <div class="min-h-screen bg-gray-100">
     {#if user}
       <nav class="bg-white shadow-lg">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -64,6 +63,26 @@
   
       <main class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
         <div class="px-4 py-6 sm:px-0">
+          {#if drinkmeSpreadsheet}
+            <div class="mb-6 p-6 bg-white shadow-md rounded-lg">
+              <div class="flex justify-between items-center">
+                <div>
+                  <h2 class="text-2xl font-semibold text-gray-900">Drinkme Spreadsheet</h2>
+                  <p class="mt-2 text-sm text-gray-500">Last modified: {new Date(drinkmeSpreadsheet.modifiedTime).toLocaleDateString()}</p>
+                </div>
+                <div class="flex space-x-4">
+                  <!-- <a href={`https://docs.google.com/spreadsheets/d/${drinkmeSpreadsheet.id}`} target="_blank" class="text-sm font-medium text-indigo-600 hover:text-indigo-500">
+                    View spreadsheet →
+                  </a> -->
+                  <a href={`/edit/${drinkmeSpreadsheet.id}`} class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
+                    Edit
+                  </a>
+                </div>
+              </div>
+            </div>
+          {:else}
+            <p class="text-gray-600">You don't have a spreadsheet named "Drinkme".</p>
+          {/if}
           <h2 class="text-2xl font-semibold text-gray-900 mb-6">Your Spreadsheets</h2>
           {#if spreadsheets.length > 0}
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -80,9 +99,6 @@
                     <a href="#" class="text-sm font-medium text-indigo-600 hover:text-indigo-500">
                       View spreadsheet →
                     </a>
-                    <!-- <a target="_blank"  href="https://docs.google.com/spreadsheets/d/{spreadsheet.id}" class="text-sm font-medium text-indigo-600 hover:text-indigo-500">
-                        View spreadsheet →
-                      </a> -->
                   </div>
                 </div>
               {/each}
@@ -122,3 +138,5 @@
       </div>
     {/if}
   </div>
+  
+  

@@ -39,8 +39,10 @@
 		"@tailwindcss/container-queries": "^0.1.1",
 		"@tailwindcss/forms": "^0.5.9",
 		"@tailwindcss/typography": "^0.5.15",
+		"chart.js": "^4.4.7",
 		"svelte-google-auth": "^0.7.2",
 		"svelte-icons": "^2.1.0",
+		"svelte-routing": "^2.13.0",
 		"sveltekit-oauth": "^0.1.5"
 	}
 }
